@@ -2,6 +2,23 @@ version: '3'
 
 services:
 
+  django:
+    hostname: ${PROJECT_FLAG}_${BACKEND_DJANGO_CONTAINER}
+    image: ${BACKEND_DJANGO_IMAGE}
+    container_name: ${PROJECT_FLAG}_${BACKEND_DJANGO_CONTAINER}
+    command: bash -c "pip install -r requirements.txt && python manage.py runserver 0.0.0.0:8000"
+#    command: bash -c "pip install -r requirements.txt && uwsgi --ini /usr/src/app/uwsgi.ini"
+    working_dir: /usr/local/src/backend
+    ports:
+      - ${DOCKER_BIND_HOST}:${BACKEND_DJANGO_HOST_PORT}:8000
+    volumes:
+      - ${WORKSPACE}/backend:/usr/local/src/backend
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+        max-file: "3"
+
   frontend:
     hostname: ${PROJECT_FLAG}_${FRONTEND_SERVER_CONTAINER}
     image: ${FRONTEND_SERVER_IMAGE}
