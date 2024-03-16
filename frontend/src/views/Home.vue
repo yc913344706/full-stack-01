@@ -1,8 +1,41 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import serviceAxios from '@/utils/http/MyAxios';
+import { Ref, onMounted, ref } from 'vue';
+import { backendServerConfig } from '@/config/httpConfig';
+import { notify_user_by_resp } from '@/utils/http/MyNotify';
+import { ElMessage } from 'element-plus';
+
+const data: Ref<string> = ref('');
+
+const getDemoTxt = async () => {
+    try {
+        let search_conditions = {};
+        // console.log("search_conditions: ", search_conditions)
+
+        let resp = (await serviceAxios({
+            url: backendServerConfig.url.demo.demoTxt,
+            method: 'get',
+            params: search_conditions,
+        })) as any;
+
+        notify_user_by_resp(resp, '获取后端demo文字成功！');
+
+        const _resp_result: string = resp.result;
+        data.value = _resp_result;
+    } catch (err) {
+        console.error(err);
+        ElMessage.error('获取后端demo文字请求出错！');
+    } finally {
+    }
+};
+onMounted(() => {
+    getDemoTxt();
+});
+</script>
 
 <template>
     <div class="homeDiv">
-        <p>YcLey</p>
+        <p>{{ data }}</p>
         <div style="width: 100%; height: 3px; background: black"></div>
         <p>欢迎您！</p>
     </div>
