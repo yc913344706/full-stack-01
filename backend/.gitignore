@@ -1,0 +1,11 @@
+.DS_Store
+
+.pyc
+*.pyc
+*.pyo
+
+db.sqlite3
+django.db
+
+celerybeat.pid
+celerybeat-schedule.db
