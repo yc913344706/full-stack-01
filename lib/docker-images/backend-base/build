@@ -10,14 +10,20 @@ if [ "${debug_flag}" == "-d" ]; then
 fi
 
 set -e
-[ -n "${WORKSPACE}" ] || WORKSPACE="$(dirname $(realpath $0))"
+[ -n "${WORKSPACE}" ] || WORKSPACE="$(dirname $(dirname $(dirname $(dirname $(realpath $0)))))"
 
 CURRENT_DIR="$(dirname $0)"
 ###################
 
+
 DOCKER_IMAGE_NAME="yc913344706/ubuntu22:python3.10"
 
-# build arm64, amd64
+_backend_req_txt="${WORKSPACE}/backend/requirements.txt"
+[ -f "${_backend_req_txt}" ] &&
+    cp -a ${_backend_req_txt} ${CURRENT_DIR}/root/
+
+# build arm64, amd64 image
+# - https://zhuanlan.zhihu.com/p/642716492
 for _arch in linux/arm64 linux/amd64
 do
     docker buildx build \
