@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+
+  frontend_compile:
+    hostname: ${PROJECT_FLAG}-${FRONTEND_BUILD_CONTAINER_NAME}
+    image: ${FRONTEND_BUILD_IMAGE}
+    container_name: ${PROJECT_FLAG}-${FRONTEND_BUILD_CONTAINER_NAME}
+    restart: always
+    command: /usr/local/sbin/compile_frontend /usr/local/src/frontend
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
+      - ${WORKSPACE}/frontend:/usr/local/src/frontend
+      - ${WORKSPACE}/lib/frontend/compile_frontend:/usr/local/sbin/compile_frontend
+    healthcheck:
+      test: grep success /usr/local/src/frontend/build.result
+      interval: 6s
+      timeout: 6s
+      retries: 110
+    networks:
+      - yc_ley
+
+
+
+# a, b, c类地址: https://zhuanlan.zhihu.com/p/149092624
+# 配置docker-compose network: https://zhuanlan.zhihu.com/p/334751260
+# ip段计算器: https://ipjisuanqi.com/
+# - subnet:
+#   - 29: 可用2^(32-29)-2=6个地址。第一位给网络，最后一位给广播
+
+networks:
+  yc_ley:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.31.10.0/29
+          gateway: 172.31.10.1
+

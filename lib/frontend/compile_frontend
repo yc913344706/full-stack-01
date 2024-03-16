@@ -1,0 +1,38 @@
+#!/bin/bash
+set -e
+
+code_dir=$1
+#deploy_uid=$2
+#deploy_gid=$3
+
+flag_file="${code_dir}/build.result"
+
+[ -d "${code_dir}/dist" ] && {
+  rm -rf "${code_dir}/dist"  "${flag_file}"
+}
+
+npm config set registry https://registry.npm.taobao.org
+npm config set strict-ssl false
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+run_flag=build
+
+[ -d "${code_dir}/node_modules" ] || {
+    _image_node_modules="/usr/local/src/node_modules"
+    if [ -d "${_image_node_modules}" ]; then
+      mv ${_image_node_modules} ${code_dir}/
+    fi
+}
+#rm -rf ${code_dir}/node_modules
+
+#[ -n "${deploy_uid}" ] && [ -n "${deploy_gid}" ] && chown -R ${deploy_uid}:${deploy_gid} ${code_dir}
+
+cd ${code_dir} &&
+    cnpm install &&
+    npm run ${run_flag} &&
+    [ -d "${code_dir}/dist" ] &&
+    echo "success" > ${flag_file}
+
+#[ -n "${deploy_uid}" ] && [ -n "${deploy_gid}" ] && chown -R ${deploy_uid}:${deploy_gid} ${code_dir}
+
+while true; do sleep 60; done

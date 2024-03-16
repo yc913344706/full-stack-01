@@ -23,7 +23,7 @@ main() {
     docker-compose \
         -f ./deploy/docker-compose.yml \
         --env-file etc/docker-compose.env \
-        up -d
+        down
 }
 
 main
