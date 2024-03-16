@@ -30,7 +30,13 @@ main() {
         docker-compose \
             -f ./deploy/docker-compose.yml \
             --env-file etc/docker-compose.env \
-            up -d
+            pull &&
+            docker-compose \
+                -f ./deploy/docker-compose.yml \
+                --env-file etc/docker-compose.env \
+                up -d
+
+    log_info "启动完毕。通过 http://localhost:18080/ 访问服务。"
 }
 
 main
