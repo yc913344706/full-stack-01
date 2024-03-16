@@ -1,4 +1,7 @@
 asgiref==3.7.2
+contextlib2==21.6.0
 Django==5.0.3
+django-cors-headers==4.3.1
+schema==0.7.5
 sqlparse==0.4.4
 typing_extensions==4.10.0
