@@ -40,3 +40,13 @@ check_file_existed_with_timeout()
     [ "${_flag}" -lt "${_timeout}" ] || die "cannot find file until timeout"
   fi
 }
+
+check_pkg() {
+    _pkg="$1"
+    command -v ${_pkg} > /dev/null || die "cannot find pkg: ${_pkg}"
+}
+
+check_deps() {
+    check_pkg "docker"
+    check_pkg "docker-compose"
+}

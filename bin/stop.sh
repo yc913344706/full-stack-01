@@ -17,8 +17,11 @@ CURRENT_DIR="$(dirname $0)"
 ###################
 
 source ${WORKSPACE}/etc/basic
+source ${WORKSPACE}/lib/check.sh
 
 main() {
+    check_deps
+
     export WORKSPACE
     docker-compose \
         -f ./deploy/docker-compose.yml \
