@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vite + Vue + TS</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="module" src="/src/main.ts"></script>
+    </body>
+    <style>
+        body,
+        html {
+            margin: 0px;
+            padding: 0px;
+            /* 禁止body滚动 */
+            overflow: hidden;
+        }
+        /* 折叠侧边栏后，菜单弹出的二级、三级，不在id=app中，所以放到这里 */
+        .el-aside .el-menu {
+            .menu_item_is_active {
+                background-color: var(--el-color-primary);
+            }
+            *:hover {
+                color: var(--el-color-warning);
+            }
+            .el-sub-menu .el-menu-item {
+                height: 40px;
+                line-height: 40px;
+            }
+        }
+    </style>
+</html>
