@@ -5,6 +5,10 @@
 - 能看懂的，若有心情，高台鬼手，帮我改改，谢谢。
 - 看不懂的，请不要乱动，谢谢。
 
+注：
+- github: https://github.com/yc913344706/full-stack-base.git
+- gitee: https://gitee.com/ycvayne/full-stack-base.git
+
 ## 使用
 
 ```shell
