@@ -1,0 +1,53 @@
+#!/bin/bash
+
+##################
+debug_flag="$1"
+if [ "${debug_flag}" == "-d" ]; then
+  set -x
+  DEBUG_MODE="-d"
+  LOG_LEVEL="DEBUG"
+  shift 1
+fi
+
+set -e
+[ -n "${WORKSPACE}" ] || WORKSPACE="$(dirname $(dirname $(dirname $(dirname $(realpath $0)))))"
+
+CURRENT_DIR="$(dirname $0)"
+###################
+
+
+DOCKER_IMAGE_NAME="yc913344706/ubuntu22:python3.10"
+
+# build arm64, amd64 image
+# - https://zhuanlan.zhihu.com/p/642716492
+for _arch in linux/arm64 linux/amd64
+do
+    docker buildx build \
+        --platform ${_arch} \
+        -t ${DOCKER_IMAGE_NAME}_${_arch#*/} . \
+        --push
+done
+
+docker manifest rm ${DOCKER_IMAGE_NAME}
+
+docker manifest create ${DOCKER_IMAGE_NAME} \
+    ${DOCKER_IMAGE_NAME}_arm64 \
+    ${DOCKER_IMAGE_NAME}_amd64
+
+
+for _arch in linux/arm64 linux/amd64
+do
+    docker manifest annotate \
+        ${DOCKER_IMAGE_NAME} \
+        ${DOCKER_IMAGE_NAME}_${_arch#*/} \
+        --os ${_arch%/*} \
+        --arch ${_arch#*/}
+done
+
+docker manifest push ${DOCKER_IMAGE_NAME}
+
+# 这种方法没有成功 at apple m1
+# https://yeasy.gitbook.io/docker_practice/buildx/multi-arch-images
+#docker buildx rm mybuilder-cn
+#docker buildx create --use --name=mybuilder-cn --driver docker-container --driver-opt image=dockerpracticesig/buildkit:master
+
