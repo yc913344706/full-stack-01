@@ -5,12 +5,14 @@
     "type": "module",
     "scripts": {
         "dev": "vite --mode dev",
-        "build": "vue-tsc && vite build",
+        "build:pro": "vite build --mode pro",
+        "build": "vite build --mode pro",
         "preview": "vite preview",
         "prettier": "prettier --write ./**/*.{js,vue,ts}"
     },
     "dependencies": {
         "@element-plus/icons-vue": "^2.3.1",
+        "@types/qs": "^6.9.12",
         "axios": "^1.6.8",
         "element-plus": "^2.6.1",
         "path": "^0.12.7",
