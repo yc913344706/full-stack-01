@@ -32,7 +32,7 @@ main() {
             --env-file etc/docker-compose.env \
             up -d
 
-    log_info "重新启动完毕。通过 http://localhost:18080/ 访问服务。"
+    log_info "启动完毕。通过 http://localhost:18080/ 访问服务。"
 }
 
 main

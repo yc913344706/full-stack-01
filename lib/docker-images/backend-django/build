@@ -16,7 +16,12 @@ CURRENT_DIR="$(dirname $0)"
 ###################
 
 
-DOCKER_IMAGE_NAME="yc913344706/ubuntu22:python3.10"
+DOCKER_IMAGE_NAME="yc913344706/full_stack_backend_django:base"
+
+_backend_req_txt="${WORKSPACE}/backend/requirements.txt"
+[ -f "${_backend_req_txt}" ] &&
+    cp -a ${_backend_req_txt} ${CURRENT_DIR}/root/root/
+
 
 # build arm64, amd64 image
 # - https://zhuanlan.zhihu.com/p/642716492
@@ -28,7 +33,8 @@ do
         --push
 done
 
-docker manifest rm ${DOCKER_IMAGE_NAME}
+docker manifest rm ${DOCKER_IMAGE_NAME} ||
+    echo "rm manifest failed, not a problem"
 
 docker manifest create ${DOCKER_IMAGE_NAME} \
     ${DOCKER_IMAGE_NAME}_arm64 \

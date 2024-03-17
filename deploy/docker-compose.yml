@@ -43,6 +43,9 @@ services:
       interval: 1s
       timeout: 1s
       retries: 15
+#    links:
+#      # https://zhuanlan.zhihu.com/p/382779508
+#      - django:backend-django
 
   frontend_compile:
     hostname: ${PROJECT_FLAG}_${FRONTEND_BUILD_NAME}

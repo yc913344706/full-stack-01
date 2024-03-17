@@ -31,7 +31,10 @@ cd ${code_dir} &&
     cnpm install &&
     npm run ${run_flag} &&
     [ -d "${code_dir}/dist" ] &&
-    echo "success" > ${flag_file}
+    echo "success" > ${flag_file} || {
+        echo "build failed"
+        exit 1
+    }
 
 #[ -n "${deploy_uid}" ] && [ -n "${deploy_gid}" ] && chown -R ${deploy_uid}:${deploy_gid} ${code_dir}
 
