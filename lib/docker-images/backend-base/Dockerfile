@@ -26,4 +26,4 @@ ENV LC_ALL en_US.UTF-8
 # 清理缓存
 RUN apt clean all
 RUN find /var/lib/apt/lists -type f -delete && \
-    find /var/cache -type f -delete \
+    find /var/cache -type f -delete
