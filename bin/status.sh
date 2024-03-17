@@ -26,7 +26,7 @@ main() {
     docker-compose \
         -f ./deploy/docker-compose.yml \
         --env-file etc/docker-compose.env \
-        ps
+        ps || die "查看状态失败"
 }
 
 main

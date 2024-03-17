@@ -26,7 +26,7 @@ main() {
     docker-compose \
         -f ./deploy/docker-compose.yml \
         --env-file etc/docker-compose.env \
-        down
+        down || die "停止失败"
 
     log_info "停止完毕。"
 }

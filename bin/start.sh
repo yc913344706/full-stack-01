@@ -31,7 +31,7 @@ main() {
         docker-compose \
             -f ./deploy/docker-compose.yml \
             --env-file etc/docker-compose.env \
-            up -d
+            up -d || die "启动失败"
 
     export_env_vars "${WORKSPACE}/etc/docker-compose.env"
     log_info "启动完毕。通过 http://localhost:${FRONTEND_SERVER_HOST_PORT}/ 访问服务。"

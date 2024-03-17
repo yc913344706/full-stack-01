@@ -15,6 +15,12 @@
 -   能看懂的，若有心情，高台鬼手，帮我改改，谢谢。
 -   看不懂的，请不要乱动，谢谢。
 
+- 前端：vue3, vite, ts
+- 后端：python3.10, django==5.0.3
+- 运维：docker-compose
+  - 支持系统：linux/arm64,linux/amd64
+
+
 > 注：
 > -   github: https://github.com/yc913344706/full-stack-base.git
 > -   gitee: https://gitee.com/ycvayne/full-stack-base.git
