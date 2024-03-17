@@ -18,6 +18,7 @@ CURRENT_DIR="$(dirname $0)"
 
 source ${WORKSPACE}/etc/basic
 source ${WORKSPACE}/lib/check.sh
+source ${WORKSPACE}/lib/read_env.sh
 
 main() {
     check_deps
@@ -32,7 +33,8 @@ main() {
             --env-file etc/docker-compose.env \
             up -d
 
-    log_info "启动完毕。通过 http://localhost:18080/ 访问服务。"
+    export_env_vars "${WORKSPACE}/etc/docker-compose.env"
+    log_info "启动完毕。通过 http://localhost:${FRONTEND_SERVER_HOST_PORT}/ 访问服务。"
 }
 
 main
